@@ -9,9 +9,12 @@ if [ ! -f "/etc/ssh/ssh_host_dsa_key" ]; then
 	ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
 fi
 
-#prepare run dir
+# prepare run dir
 if [ ! -d "/var/run/sshd" ]; then
   mkdir -p /var/run/sshd
 fi
+
+# enable tunneling
+sed -ri "s/^(AllowTcpForwarding\s+)\S+/\1yes/" /etc/ssh/sshd_config
 
 exec "$@"
