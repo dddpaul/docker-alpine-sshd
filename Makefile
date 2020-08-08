@@ -1,18 +1,18 @@
 .PHONY: all build release
 
 IMAGE=dddpaul/alpine-sshd
-VERSION=1.1
+VERSION=1.2
 
 all: build
 
 build:
 	@docker build --tag=${IMAGE} .
 
-debug:
+debug: build
 	@docker run -it --entrypoint=sh ${IMAGE}
 
-run:
-	@docker run --rm ${IMAGE}
+run: build
+	@docker run --rm --name sshd -p 10022:22 -v ${PWD}/users.csv:/etc/ssh/users.csv ${IMAGE}
 
 release: build
 	@docker build --tag=${IMAGE}:${VERSION} .
