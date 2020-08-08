@@ -26,7 +26,8 @@ if [ -f /etc/ssh/users.csv ]; then
 			mkdir -p -m 0700 /home/$login/.ssh
 			echo $ssh_key > /home/$login/.ssh/authorized_keys
 			chmod 0600 /home/$login/.ssh/authorized_keys
-			chown -R $login /home/$login/.ssh
+			id=`id -u $login`
+			chown -R $id /home/$login/.ssh
 		fi
 	done < /etc/ssh/users.csv
 fi
