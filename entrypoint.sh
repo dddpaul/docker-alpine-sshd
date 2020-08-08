@@ -22,11 +22,12 @@ if [ -f /etc/ssh/users.csv ]; then
 	while IFS=, read login password_hash ssh_key; do
 		adduser -s /bin/sh -h /home/$login $login
 		sed -i "s|$login:!:|$login:$password_hash:|" /etc/shadow
-		mkdir -p /home/$login/.ssh
-		echo $ssh_key >>/home/$login/.ssh/authorized_keys
-		chown -R $login /home/$login/.ssh
-		chmod 0700 /home/$login/.ssh
-		chmod 0600 /home/$login/.ssh/*
+		if [ ! -z "$ssh_key" ]; then
+			mkdir -p -m 0700 /home/$login/.ssh
+			echo $ssh_key > /home/$login/.ssh/authorized_keys
+			chmod 0600 /home/$login/.ssh/authorized_keys
+			chown -R $login /home/$login/.ssh
+		fi
 	done < /etc/ssh/users.csv
 fi
 
