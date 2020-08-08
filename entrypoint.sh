@@ -19,7 +19,7 @@ sed -ri "s/^(AllowTcpForwarding\s+)\S+/\1yes/" /etc/ssh/sshd_config
 
 # add users from csv file
 if [ -f /etc/ssh/users.csv ]; then
-	cat /etc/ssh/users.csv | while IFS=, read login password_hash ssh_key; do
+	while IFS=, read login password_hash ssh_key; do
 		adduser -s /bin/sh -h /home/$login $login
 		sed -i "s|$login:!:|$login:$password_hash:|" /etc/shadow
 		mkdir -p /home/$login/.ssh
@@ -27,7 +27,7 @@ if [ -f /etc/ssh/users.csv ]; then
 		chown -R $login /home/$login/.ssh
 		chmod 0700 /home/$login/.ssh
 		chmod 0600 /home/$login/.ssh/*
-	done
+	done < /etc/ssh/users.csv
 fi
 
 exec "$@"
