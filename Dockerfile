@@ -1,5 +1,5 @@
 FROM alpine:edge
-MAINTAINER Pavel Derendyaev <dddpaul@gmail.com>
+LABEL maintainer="Pavel Derendyaev <dddpaul@gmail.com>"
 
 RUN apk add --update openssh \
     && rm  -rf /tmp/* /var/cache/apk/* \
