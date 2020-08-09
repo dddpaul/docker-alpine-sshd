@@ -20,6 +20,7 @@ sed -ri "s/^(AllowTcpForwarding\s+)\S+/\1yes/" /etc/ssh/sshd_config
 # add users from csv file
 if [ -f /etc/ssh/users.csv ]; then
 	while IFS=, read login password_hash ssh_key; do
+	    echo "Add user $login"
 		adduser -D -s /bin/sh -h /home/$login $login
 		sed -i "s|$login:!:|$login:$password_hash:|" /etc/shadow
 		if [ ! -z "$ssh_key" ]; then
