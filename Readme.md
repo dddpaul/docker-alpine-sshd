@@ -54,3 +54,13 @@ For testing (password is "qwerty"):
 make run
 ssh -p 10022 test_user@localhost
 ```
+
+### Configuration
+
+Set the following environment variables to pass values to `/etc/ssh/sshd_config` inside container:
+* SSHD_ALLOW_TCP_FORWARDING
+* SSHD_TCP_KEEP_ALIVE
+* SSHD_CLIENT_ALIVE_INTERVAL
+* SSHD_CLIENT_ALIVE_COUNT_MAX
+
+See `man sshd_config` for detailed information.

@@ -1,5 +1,39 @@
 #!/bin/sh
 
+# Taken from https://github.com/wurstmeister/kafka-docker/blob/master/start-kafka.sh
+(
+	function updateConfig() {
+		key=$1
+		value=$2
+		file=$3
+
+		echo "[Configuring] '$key' with '$value' in '$file'"
+
+		# If config exists in file, replace it. Otherwise, append to file.
+		if grep -E -q "^#?$key[[:space:]]" "$file"; then
+			sed -r -i "s/^#?$key[[:space:]]+.*/$key $value/g" "$file"
+		else
+			echo "$key $value" >> "$file"
+		fi
+	}
+
+	if [ -n "$SSHD_ALLOW_TCP_FORWARDING" ]; then
+		updateConfig "AllowTcpForwarding" "$SSHD_ALLOW_TCP_FORWARDING" /etc/ssh/sshd_config
+	fi
+
+	if [ -n "$SSHD_TCP_KEEP_ALIVE" ]; then
+		updateConfig "TcpKeepAlive" "$SSHD_TCP_KEEP_ALIVE" /etc/ssh/sshd_config
+	fi
+
+	if [ -n "$SSHD_CLIENT_ALIVE_INTERVAL" ]; then
+		updateConfig "ClientAliveInterval" "$SSHD_CLIENT_ALIVE_INTERVAL" /etc/ssh/sshd_config
+	fi
+
+	if [ -n "$SSHD_CLIENT_ALIVE_COUNT_MAX" ]; then
+		updateConfig "ClientAliveCountMax" "$SSHD_CLIENT_ALIVE_COUNT_MAX" /etc/ssh/sshd_config
+	fi
+)
+
 if [ ! -f "/etc/ssh/ssh_host_rsa_key" ]; then
 	# generate fresh rsa key
 	ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
@@ -13,9 +47,6 @@ fi
 if [ ! -d "/var/run/sshd" ]; then
   mkdir -p /var/run/sshd
 fi
-
-# enable tunneling
-sed -ri "s/^(AllowTcpForwarding\s+)\S+/\1yes/" /etc/ssh/sshd_config
 
 # add users from csv file
 if [ -f /etc/ssh/users.csv ]; then
