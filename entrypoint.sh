@@ -22,7 +22,7 @@
 	fi
 
 	if [ -n "$SSHD_TCP_KEEP_ALIVE" ]; then
-		updateConfig "TcpKeepAlive" "$SSHD_TCP_KEEP_ALIVE" /etc/ssh/sshd_config
+		updateConfig "TCPKeepAlive" "$SSHD_TCP_KEEP_ALIVE" /etc/ssh/sshd_config
 	fi
 
 	if [ -n "$SSHD_CLIENT_ALIVE_INTERVAL" ]; then
