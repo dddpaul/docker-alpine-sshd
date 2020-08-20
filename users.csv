@@ -1,3 +1,4 @@
 test_user,$6$10FpQcEX$r9L8P2UvmoX3MfxYE9JNXfdYurlGfiNXZjCCNV/6dj9tGmAspqpig4FtDf1xJT3k/wk8FOTG.eaPtTdjQT5o3.,
-test.user.with.key,$6$10FpQcEX$r9L8P2UvmoX3MfxYE9JNXfdYurlGfiNXZjCCNV/6dj9tGmAspqpig4FtDf1xJT3k/wk8FOTG.eaPtTdjQT5o3.,ssh-rsa-key
-
+test_user_with_key,$6$10FpQcEX$r9L8P2UvmoX3MfxYE9JNXfdYurlGfiNXZjCCNV/6dj9tGmAspqpig4FtDf1xJT3k/wk8FOTG.eaPtTdjQT5o3.,ssh-rsa-key
+test.user.with.dots,$6$10FpQcEX$r9L8P2UvmoX3MfxYE9JNXfdYurlGfiNXZjCCNV/6dj9tGmAspqpig4FtDf1xJT3k/wk8FOTG.eaPtTdjQT5o3.,
+root,$6$10FpQcEX$r9L8P2UvmoX3MfxYE9JNXfdYurlGfiNXZjCCNV/6dj9tGmAspqpig4FtDf1xJT3k/wk8FOTG.eaPtTdjQT5o3.,ssh-rsa-key

@@ -52,15 +52,24 @@ fi
 if [ -f /etc/ssh/users.csv ]; then
 	while IFS=, read login password_hash ssh_key; do
 		[ -z "$login" ] && continue
-	    echo "Add user $login"
-		adduser -D -s /bin/sh -h /home/$login $login
-		sed -i "s|$login:!:|$login:$password_hash:|" /etc/shadow
+	    echo "[Adding] user '$login'"
+
+		home="/home/$login"
+		if [ "$login" == "root" ]; then
+			home="/root"
+		fi
+
+		if [ "$login" != "root" ]; then
+			adduser -D -s /bin/sh -h $home $login
+		fi
+		sed -i "s|$login:|$login:$password_hash|" /etc/shadow
+
 		if [ ! -z "$ssh_key" ]; then
-			mkdir -p -m 0700 /home/$login/.ssh
-			echo $ssh_key > /home/$login/.ssh/authorized_keys
-			chmod 0600 /home/$login/.ssh/authorized_keys
-			id=`id -u $login`
-			chown -R $id /home/$login/.ssh
+			mkdir -p -m 0700 /$home/.ssh
+			echo $ssh_key > /$home/.ssh/authorized_keys
+			chmod 0600 /$home/.ssh/authorized_keys
+			id=$(id -u $login)
+			chown -R $id /$home/.ssh
 		fi
 	done < /etc/ssh/users.csv
 fi
