@@ -1,3 +1,7 @@
+# Based on:
+# https://www.prestonlamb.com/blog/creating-a-docker-image-with-github-actions
+# https://www.learncloudnative.com/blog/2020-02-20-github-action-build-push-docker-images
+
 on:
   push:
     branches:
