@@ -1,7 +1,7 @@
 .PHONY: all build release
 
 IMAGE=dddpaul/alpine-sshd
-VERSION=1.12
+VERSION=1.13
 
 all: build
 
