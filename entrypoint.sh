@@ -74,7 +74,7 @@ if [ -f /etc/ssh/users.csv ]; then
 		if [ "$login" != "root" ]; then
 			adduser -D -s /bin/sh -h $home $login
 		fi
-		sed -i "s|$login:|$login:$password_hash|" /etc/shadow
+		sed -i -E "s|$login:!?|$login:$password_hash|" /etc/shadow
 
 		if [ ! -z "$ssh_key" ]; then
 			mkdir -p -m 0700 /$home/.ssh
