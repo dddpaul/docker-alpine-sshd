@@ -1,7 +1,7 @@
 .PHONY: all build release
 
 IMAGE=dddpaul/alpine-sshd
-VERSION=$(shell git describe --tags --abbrev=0)
+VERSION=$(shell git describe --tags --abbrev=0 | tr -d v)
 
 all: build
 
