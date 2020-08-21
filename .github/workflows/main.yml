@@ -19,6 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Create Release
+        id: release
         uses: rymndhng/release-on-push-action@v0.15.0
         with:
           bump_version_scheme: minor
