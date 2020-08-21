@@ -15,7 +15,7 @@ run: build
 	@docker run --rm --name sshd -p 10022:22 -v ${PWD}/users.csv:/etc/ssh/users.csv -e SSHD_ALLOW_TCP_FORWARDING=yes -e SSHD_CLIENT_ALIVE_INTERVAL=30 ${IMAGE}
 
 release: build
-	echo ${VERSION}
+	@echo "Tag image with version ${VERSION}"
 	@docker tag ${IMAGE} ${IMAGE}:${VERSION}
 
 push: release
