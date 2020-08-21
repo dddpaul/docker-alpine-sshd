@@ -32,6 +32,10 @@
 	if [ -n "$SSHD_CLIENT_ALIVE_COUNT_MAX" ]; then
 		updateConfig "ClientAliveCountMax" "$SSHD_CLIENT_ALIVE_COUNT_MAX" /etc/ssh/sshd_config
 	fi
+
+	if [ -n "$SSHD_LOG_LEVEL" ]; then
+		updateConfig "LogLevel" "$SSHD_LOG_LEVEL" /etc/ssh/sshd_config
+	fi
 )
 
 if [ ! -f "/etc/ssh/ssh_host_rsa_key" ]; then
