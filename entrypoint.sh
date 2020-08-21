@@ -36,6 +36,14 @@
 	if [ -n "$SSHD_LOG_LEVEL" ]; then
 		updateConfig "LogLevel" "$SSHD_LOG_LEVEL" /etc/ssh/sshd_config
 	fi
+
+	if [ -n "$SSHD_PUBKEY_AUTHENTICATION" ]; then
+		updateConfig "PubkeyAuthentication" "$SSHD_PUBKEY_AUTHENTICATION" /etc/ssh/sshd_config
+	fi
+
+	if [ -n "$SSHD_PASSWORD_AUTHENTICATION" ]; then
+		updateConfig "PasswordAuthentication" "$SSHD_PASSWORD_AUTHENTICATION" /etc/ssh/sshd_config
+	fi
 )
 
 if [ ! -f "/etc/ssh/ssh_host_rsa_key" ]; then

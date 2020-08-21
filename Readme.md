@@ -63,5 +63,7 @@ Set the following environment variables to pass values to `/etc/ssh/sshd_config`
 * SSHD_CLIENT_ALIVE_INTERVAL
 * SSHD_CLIENT_ALIVE_COUNT_MAX
 * SSHD_LOG_LEVEL
+* SSHD_PUBKEY_AUTHENTICATION
+* SSHD_PASSWORD_AUTHENTICATION
 
 See `man sshd_config` for detailed information.
