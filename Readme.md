@@ -33,7 +33,7 @@ docker run -p 4848:22 --name alpine-sshd --hostname alpine-sshd -d dddpaul/alpin
 docker exec -ti alpine-sshd passwd
 ```
 
-### From your workstation
+### Connect from your workstation
 
 ssh to your new docker environment, with an agent the -i option is not needed
 
