@@ -17,33 +17,18 @@
 		fi
 	}
 
-	if [ -n "$SSHD_ALLOW_TCP_FORWARDING" ]; then
-		updateConfig "AllowTcpForwarding" "$SSHD_ALLOW_TCP_FORWARDING" /etc/ssh/sshd_config
-	fi
+	startswith() { case $2 in "$1"*) true;; *) false;; esac; }
 
-	if [ -n "$SSHD_TCP_KEEP_ALIVE" ]; then
-		updateConfig "TCPKeepAlive" "$SSHD_TCP_KEEP_ALIVE" /etc/ssh/sshd_config
-	fi
-
-	if [ -n "$SSHD_CLIENT_ALIVE_INTERVAL" ]; then
-		updateConfig "ClientAliveInterval" "$SSHD_CLIENT_ALIVE_INTERVAL" /etc/ssh/sshd_config
-	fi
-
-	if [ -n "$SSHD_CLIENT_ALIVE_COUNT_MAX" ]; then
-		updateConfig "ClientAliveCountMax" "$SSHD_CLIENT_ALIVE_COUNT_MAX" /etc/ssh/sshd_config
-	fi
-
-	if [ -n "$SSHD_LOG_LEVEL" ]; then
-		updateConfig "LogLevel" "$SSHD_LOG_LEVEL" /etc/ssh/sshd_config
-	fi
-
-	if [ -n "$SSHD_PUBKEY_AUTHENTICATION" ]; then
-		updateConfig "PubkeyAuthentication" "$SSHD_PUBKEY_AUTHENTICATION" /etc/ssh/sshd_config
-	fi
-
-	if [ -n "$SSHD_PASSWORD_AUTHENTICATION" ]; then
-		updateConfig "PasswordAuthentication" "$SSHD_PASSWORD_AUTHENTICATION" /etc/ssh/sshd_config
-	fi
+    # Read in env as a new-line separated array. This handles the case of env variables have spaces and/or carriage returns.
+    IFS=$'\n'
+    for env_var in $(env); do
+        env_name=$(echo "$env_var" | cut -d= -f1)
+		if startswith SSHD_ "$env_name"; then
+			sshd_name=$(echo "$env_name" | cut -d_ -f2- | tr '[:upper:]' '[:lower:]' | sed -E 's/(^|_)([a-z])/\U\2/g')
+			env_val=$(printenv $env_name)
+			updateConfig "$sshd_name" "$env_val" /etc/ssh/sshd_config
+		fi
+	done
 )
 
 if [ ! -f "/etc/ssh/ssh_host_rsa_key" ]; then

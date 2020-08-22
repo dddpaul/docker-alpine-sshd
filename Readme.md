@@ -63,14 +63,6 @@ ssh -p 10022 test_user@localhost
 
 ### Configuration
 
-Set the following environment variables to pass values to `/etc/ssh/sshd_config` inside container:
+Set environment variables prefixed with `SSHD_` to pass values to `/etc/ssh/sshd_config` inside container, for example, `SSHD_ALLOW_TCP_FORWARDING=yes` becomes `AllowTcpForwarding yes`.
 
-* SSHD_ALLOW_TCP_FORWARDING
-* SSHD_TCP_KEEP_ALIVE
-* SSHD_CLIENT_ALIVE_INTERVAL
-* SSHD_CLIENT_ALIVE_COUNT_MAX
-* SSHD_LOG_LEVEL
-* SSHD_PUBKEY_AUTHENTICATION
-* SSHD_PASSWORD_AUTHENTICATION
-
-See `man sshd_config` for detailed information.
+See `man sshd_config` for detailed information about configuration options.
